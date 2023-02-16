@@ -1,0 +1,30 @@
+# short list of ssh know-how-to:
+
+ssh-add -l ### List fingerprints of all identities
+
+# Removes all keys belonging to hostname from a known_hosts file:
+ssh-keygen -f "/home/user/.ssh/known_hosts" -R "[dock2222]:2222"
+
+# exec remote script by bash: ssh user@host -t bash [script.sh [params]]
+
+...bashit function list from bashit/enabled/104---ssh.bash:
+function scp-to { '..Usage: scp-to <source-file/folder> <[user@]host> <dest-folder> [scp_options([-r:recursive] [-P port])]'
+function scp-from { '..Usage: scp-from <[user@]host> <source-file/folder> <dest-folder> [scp_options([-r:recursive] [-P port])]'
+
+function ssh-do { "..Usage: ssh-do ['ssh_options(-p port)'] <[user@]host> <[-x: bash_options] cmd1[; cmd2]>; : same as ssh-bash with -c option"
+function ssh-bash { "..Usage: ssh-bash ['ssh_options(-p port)'] <[user@]host> [[-x|-c: bash_options] [sudo] script.sh [param1,...]]"
+
+function ssh-script { "..Usage: ssh-script ['ssh_options(-p port)'] <[user@]host> <[bash-option(-x)] [sudo] script-name [param]>;: Transfer and exec a script"
+function ssh-function { "..Usage: ssh-function ['ssh_options(-p port)'] <[user@]host> <[bash-option(-x)] [sudo] script/function [param]>;: Transfer script and exec its function with params"
+function ssh-console-function { "..Usage: ssh-console-function ['ssh_options(-p port)'] <[user@]host> <[bash-option(-x)] function-name [param]>;: Transfer and exec a local console function with params"
+
+function ssh-mkuser { "..Usage: ssh-mkuser ['ssh_options(-p port)'] <[user@]host> [remote_user=$(id -un)]; : Add user on remote host"
+function ssh-cp-id { "..Usage: ssh-cp-id ['ssh_options(-p port)'] <[user@]host>; : Copy by ssh rsa key on remote host (same as ssh-copy-id)"
+function ssh-rm-id { "..Usage: ssh-rm-id ['ssh_options(-p port)'] <[user@]host>; : Remove by ssh: ~/.ssh/authorized_keys"
+
+function sshfs-mount { '..Usage: sshfs-mount <[user@]host[:/remote/mount/dir/]> <mountPoint> [sshfs options(ex.: -p port)]'
+function sshfs-umount { '..Usage: sshfs-umount <mountPoint> [fusermount(umount) options]'
+
+# sshfs mount: sshfs user@dock2222:/remote/mount/dir/ /local/mount/dir/ -p 2222
+# sshfs unmount by user: fusermount -u /local/mount/dir/;: unmount by root: sudo umount /local/mount/dir/
+# sftp://user@dock2222:2222
